@@ -106,7 +106,7 @@ javascript: (function() {
     function normalize(value, min, max, newMin, newMax) {
         return ((value - min) / (max - min)) * (newMax - newMin) + newMin;
     }
-
+    const average = array => array.reduce((a, b) => a + b) / array.length;
 
     function drawSmoothLine(points) {
         var simplifiedPoints = ramerDouglasPeucker(points, errorCorrection);
@@ -127,7 +127,7 @@ javascript: (function() {
             context.moveTo(p1.x, p1.y);
 
             if (penStyleInk) {
-                var strokeWidth = Math.min(p0.pressure,p1.pressure,p2.pressure,p3.pressure) * baseStroke;
+                var strokeWidth = (Math.min(p0.pressure,p1.pressure,p2.pressure,p3.pressure)+average([p0.pressure,p1.pressure,p2.pressure,p3.pressure]))/2 * baseStroke;
                 context.lineWidth = normalize(strokeWidth, 0, 1, baseStroke * 0.5, baseStroke * 3 * highlighterMultiplier);
             } else {
                 var strokeWidth = baseStroke * highlighterMultiplier;
