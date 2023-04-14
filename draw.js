@@ -127,7 +127,7 @@ javascript: (function() {
             context.moveTo(p1.x, p1.y);
 
             if (penStyleInk) {
-                var strokeWidth = (p1.pressure) * baseStroke;
+                var strokeWidth = Math.min(p0.pressure,p1.pressure,p2.pressure,p3.pressure) * baseStroke;
                 context.lineWidth = normalize(strokeWidth, 0, 1, baseStroke * 0.5, baseStroke * 3 * highlighterMultiplier);
             } else {
                 var strokeWidth = baseStroke * highlighterMultiplier;
