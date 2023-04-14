@@ -2,7 +2,7 @@
 > This bookmarklet supports both touch and pen pressure, allowing you to draw over webpages.
  
  
- 
+ ![GitHub](https://img.shields.io/github/license/henriquemor/draw-bookmarklet?color=lightgray&style=flat-square)
  
  
 Features:
