@@ -1,7 +1,7 @@
 javascript: (function() {
     var repo = "https://github.com/henriquemor/draw-bookmarklet";
     var author = "Henrique Moraes";
-    var version = "7";
+    var version = "8";
     var license = "MIT - 2023";
   
     var canvas = document.getElementById("draw-on-page-canvas");
