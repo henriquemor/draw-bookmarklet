@@ -20,7 +20,7 @@ jobs:
          content="$(cat draw.min.js)"   
          modified_content="\${content:23:-5}"
          echo "$modified_content" > draw.load.js
-
+       shell: bash
        
      
   # Auto commits minified files to the repository
