@@ -15,6 +15,13 @@ jobs:
      - name: Auto Minify
        uses: nizarmah/auto-minify@v2.1
        
+     - name: Remove characters and create draw.load.js
+       run: |
+         content="$(cat draw.min.js)"   
+         modified_content="\${content:23:-5}"
+         echo "$modified_content" > draw.load.js
+
+       
      
   # Auto commits minified files to the repository
   # Ignore it if you don't want to commit the files to the repository 
