@@ -1,2 +1,4 @@
-alert("hello");
+(function(){
+  alert("hello");
 console.log("loaded");
+           })();
