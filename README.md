@@ -5,7 +5,7 @@
  ![GitHub](https://img.shields.io/github/license/henriquemor/draw-bookmarklet?color=lightgray&style=flat-square)
  
  
-Features:
+## Features
 - line path smoothing
 - toggle between "pen" and "brush" with variable pressure
 - color picker
@@ -15,18 +15,21 @@ Features:
 - eraser
 - disable button to interact with the elements of the page below
 
-How to install:
+## Installation
 Copy the draw.js or draw.min.js to your bookmark url and execute at the desired page.
 
+## Screenshot
 ![23B90561-17A9-4140-9010-E5FBC4973925](https://user-images.githubusercontent.com/8562380/232147750-10d129e6-208a-4a5d-b1bb-d85327498761.jpeg)
 
-Known issues:
+## Known issues
 Working on safari, but chrome is not executing.
 
-To-do
-- [ ] improve the layout
+## To-do
+- [ ] improve the tool layout
 - [ ] create the option to load the script as an external file, as some browsers have a limit on bookmarklet character size
-- [ ] saving
+- [ ] options saving
 - [ ] repository
   - [ ] actions (issue with .load file creation)
+- [ ] improve highlighter
 
+`contributions are welcome`
