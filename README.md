@@ -14,7 +14,7 @@
 - undo
 - eraser
 - disable button to interact with the elements of the page below
-
+- palm rejection
 
 **Tested on**
 - iOs Ipad Safari with Apple pen.
@@ -32,10 +32,10 @@ Working on safari, but chrome is not executing.
 ## To-do
 - [ ] improve the tool layout
 - [ ] create the option to load the script as an external file, as some browsers have a limit on bookmarklet character size
-- [ ] palm rejection
-- [ ] options saving
+- [ ] preferences saving
 - [ ] repository
   - [ ] actions (issue with .load file creation)
 - [ ] improve highlighter
+- [ ]  make the code more concise
 
 `contributions are welcome`
