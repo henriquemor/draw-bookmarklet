@@ -15,6 +15,10 @@
 - eraser
 - disable button to interact with the elements of the page below
 
+
+**Tested on**
+- iOs Ipad Safari with Apple pen.
+
 ## Installation
 Copy the draw.js or draw.min.js to your bookmark url and execute at the desired page.
 
