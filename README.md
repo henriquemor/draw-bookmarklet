@@ -1,9 +1,10 @@
 # Draw bookmarklet :crayon:
-> This bookmarklet supports both touch and pen pressure, allowing you to draw over webpages.
+This bookmarklet supports both touch and pen pressure, allowing you to draw over webpages.
  
  
  ![GitHub](https://img.shields.io/github/license/henriquemor/draw-bookmarklet?color=lightgray&style=flat-square)
  
+ ⭐ consider starring if you find this useful!
  
 ## Features
 - line path smoothing
@@ -20,7 +21,7 @@
 - iOs Ipad Safari with Apple pen.
 
 ## Installation
-Copy the draw.js or draw.min.js to your bookmark url and execute at the desired page.
+Copy the draw.js or draw.min.js content to your bookmark url and execute at the desired page.
 
 ## Screenshot
 ![01367ECE-559E-45FB-B63D-10EC259AB57B](https://user-images.githubusercontent.com/8562380/232560389-82a96448-ae75-4a8e-8798-0ae63c9f3e42.jpeg)
