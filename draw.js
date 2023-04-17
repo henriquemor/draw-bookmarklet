@@ -1,14 +1,11 @@
 javascript: (function() {
     var repo = "https://github.com/henriquemor/draw-bookmarklet";
     var author = "Henrique Moraes";
-    var version = "8.02";
+    var version = "8.5";
     var license = "MIT - 2023";
-  
+
     var canvas = document.getElementById("draw-on-page-canvas");
     if (canvas) {
-
-        var dataURL = canvas.toDataURL();
-        localStorage.setItem("canvasDrawing", dataURL);
         canvas.parentNode.removeChild(canvas);
         var ctrdv = document.getElementById("controls-div");
         ctrdv.parentNode.removeChild(ctrdv);
@@ -39,19 +36,21 @@ javascript: (function() {
     var lastY;
     var undoStack = [];
 
-    if (localStorage.getItem("canvasDrawing")) {
+    if (localStorage.getItem("canvasDrawing") && false) {
         var dataURL = localStorage.getItem("canvasDrawing");
         var img = new Image();
         img.src = dataURL;
 
         context.drawImage(img, 0, 0);
-
     }
+
 
 
     var controlsdiv = document.createElement("div");
     controlsdiv.id = "controls-div";
     controlsdiv.style.zIndex = "9999";
+    controlsdiv.style.fontSize = "12px";
+
     document.body.appendChild(controlsdiv);
 
     function ramerDouglasPeucker(points, epsilon) {
@@ -101,6 +100,7 @@ javascript: (function() {
     var points = [];
     var errorCorrection = 1;
     var highlighterMultiplier = 1;
+    var pointerType = "";
 
 
     function normalize(value, min, max, newMin, newMax) {
@@ -127,7 +127,7 @@ javascript: (function() {
             context.moveTo(p1.x, p1.y);
 
             if (penStyleInk) {
-                var strokeWidth = (Math.min(p0.pressure,p1.pressure,p2.pressure,p3.pressure)+average([p0.pressure,p1.pressure,p2.pressure,p3.pressure]))/2 * baseStroke;
+                var strokeWidth = (Math.min(p0.pressure, p1.pressure, p2.pressure, p3.pressure) + average([p0.pressure, p1.pressure, p2.pressure, p3.pressure])) / 2 * baseStroke;
                 context.lineWidth = normalize(strokeWidth, 0, 1, baseStroke * 0.5, baseStroke * 3 * highlighterMultiplier);
             } else {
                 var strokeWidth = baseStroke * highlighterMultiplier;
@@ -190,20 +190,45 @@ javascript: (function() {
     canvas.addEventListener("mousedown", startDrawing);
     canvas.addEventListener("touchstart", startTouchDrawing);
     canvas.addEventListener("mousemove", draw);
-    canvas.addEventListener("touchmove", draw);
+    canvas.addEventListener("touchmove", function(e) {
+        if (palmRejection && pointerType == 'touch') {
+            canvas.style.pointerEvents = "none";
+        } else {
+            draw(e);
+        }
+    });
+    canvas.addEventListener("pointerdown", function(e) {
+        if (palmRejection && e.pointerType == 'touch') {
+            canvas.style.pointerEvents = "none";
+        }
+    });
     canvas.addEventListener("mouseup", function() {
         isDrawing = false;
         points = [];
 
+        var dataURL = canvas.toDataURL();
+        localStorage.setItem("canvasDrawing", dataURL);
     });
     canvas.addEventListener("touchend", function() {
         isDrawing = false;
         points = [];
+
+        var dataURL = canvas.toDataURL();
+        localStorage.setItem("canvasDrawing", dataURL);
+
+
+        setTimeout(() => {
+            canvas.style.pointerEvents = "auto";
+        }, "1000");
+        setTimeout(() => {
+            canvas.style.pointerEvents = "auto";
+        }, "4000");
+
     });
 
     canvas.addEventListener('pointermove', function(event) {
         pressure = event.pressure;
-
+        pointerType = event.pointerType;
     });
 
 
@@ -247,9 +272,9 @@ javascript: (function() {
     });
 
 
-    var penStyleInk = false;
+    var penStyleInk = true;
     var penStyle = document.createElement("button");
-    penStyle.textContent = "🖌";
+    penStyle.textContent = "🖍";
     penStyle.style.position = "fixed";
     penStyle.style.top = "140px";
     penStyle.style.right = "20px";
@@ -267,7 +292,25 @@ javascript: (function() {
         }
     });
 
+    var palmRejection = true;
+    var palmStyle = document.createElement("button");
+    palmStyle.textContent = "use hands";
+    palmStyle.style.position = "fixed";
+    palmStyle.style.top = "140px";
+    palmStyle.style.right = "20px";
+    palmStyle.style.zIndex = "9999";
+    controlsdiv.appendChild(palmStyle);
+    palmStyle.addEventListener("click", function() {
+        if (palmRejection) {
+            palmStyle.textContent = "reject palm";
 
+            palmRejection = false;
+        } else {
+            palmRejection = true;
+            palmStyle.textContent = "use hands";
+
+        }
+    });
     var colors = ["black", "#02498c", "#FFAB01", "#5bc936", "#ef3228", "white"];
     colors.forEach(function(color, index) {
         var colorBtn = document.createElement("button");
