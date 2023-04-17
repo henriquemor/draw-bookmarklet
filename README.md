@@ -19,7 +19,8 @@
 Copy the draw.js or draw.min.js to your bookmark url and execute at the desired page.
 
 ## Screenshot
-![23B90561-17A9-4140-9010-E5FBC4973925](https://user-images.githubusercontent.com/8562380/232147750-10d129e6-208a-4a5d-b1bb-d85327498761.jpeg)
+![01367ECE-559E-45FB-B63D-10EC259AB57B](https://user-images.githubusercontent.com/8562380/232560389-82a96448-ae75-4a8e-8798-0ae63c9f3e42.jpeg)
+
 
 ## Known issues
 Working on safari, but chrome is not executing.
@@ -27,6 +28,7 @@ Working on safari, but chrome is not executing.
 ## To-do
 - [ ] improve the tool layout
 - [ ] create the option to load the script as an external file, as some browsers have a limit on bookmarklet character size
+- [ ] palm rejection
 - [ ] options saving
 - [ ] repository
   - [ ] actions (issue with .load file creation)
