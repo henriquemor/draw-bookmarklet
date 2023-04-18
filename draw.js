@@ -1,7 +1,7 @@
 javascript: (function() {
     var repo = "https://github.com/henriquemor/draw-bookmarklet";
     var author = "Henrique Moraes";
-    var version = "8.6";
+    var version = "8.7";
     var license = "MIT - 2023";
 
     var canvas = document.getElementById("draw-on-page-canvas");
@@ -216,14 +216,19 @@ javascript: (function() {
         var dataURL = canvas.toDataURL();
         localStorage.setItem("canvasDrawing", dataURL);
 
-
-        (function loop() {
-          if (canvas.style.pointerEvents == "auto") {
+        function enableLoop() {
+            if (canvas.style.pointerEvents == "auto") {
+                console.log("Loop stopped");
                 return;
-              }
-          canvas.style.pointerEvents = "auto";
-          setTimeout(loop, 500);
-       })();
+            }
+            canvas.style.pointerEvents = "auto";
+            setTimeout(enableLoop, 1000);
+        };
+        setTimeout(() => {
+            canvas.style.pointerEvents = "auto";
+            enableLoop();
+        }, "1000");
+
 
     });
 
@@ -235,32 +240,25 @@ javascript: (function() {
 
 
 
-    var undoBtn = document.createElement("button");
-    undoBtn.textContent = "Undo";
-    undoBtn.style.position = "fixed";
-    undoBtn.style.top = "105px";
-    undoBtn.style.right = "20px";
-    undoBtn.style.zIndex = "9999";
-    controlsdiv.appendChild(undoBtn);
-    undoBtn.addEventListener("click", function() {
-        if (undoStack.length > 1) {
-            undoStack.pop();
-            context.putImageData(undoStack[undoStack.length - 1], 0, 0);
-        } else {
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            undoStack.pop();
-        }
-    });
+
+
+
+
+    function createButton(textOn, textOff, status, top, action) {
+        var button = document.createElement("button");
+        var text = status ? textOn : textOff;
+        button.textContent = text;
+        button.style.position = "fixed";
+        button.style.top = top;
+        button.style.right = "20px";
+        button.style.zIndex = "9999";
+        controlsdiv.appendChild(button);
+        button.addEventListener("click", action);
+        return button;
+    }
 
     var eraserActive = false;
-    var eraserBtn = document.createElement("button");
-    eraserBtn.textContent = "erase";
-    eraserBtn.style.position = "fixed";
-    eraserBtn.style.top = "70px";
-    eraserBtn.style.right = "20px";
-    eraserBtn.style.zIndex = "9999";
-    controlsdiv.appendChild(eraserBtn);
-    eraserBtn.addEventListener("click", function() {
+    var eraserBtn = createButton("erasing (active)", "erase", eraserActive, "70px", function() {
         if (eraserActive) {
             eraserBtn.textContent = "erase";
             context.globalCompositeOperation = 'source-over';
@@ -272,46 +270,58 @@ javascript: (function() {
         }
     });
 
+    var undoBtn = createButton("undo", "", true, "105px", function() {
+        if (undoStack.length > 1) {
+            undoStack.pop();
+            context.putImageData(undoStack[undoStack.length - 1], 0, 0);
+        } else {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            undoStack.pop();
+        }
+    });
 
     var penStyleInk = true;
-    var penStyle = document.createElement("button");
-    penStyle.textContent = "🖍";
-    penStyle.style.position = "fixed";
-    penStyle.style.top = "140px";
-    penStyle.style.right = "20px";
-    penStyle.style.zIndex = "9999";
-    controlsdiv.appendChild(penStyle);
-    penStyle.addEventListener("click", function() {
+    var pressureBtn = createButton("🖍", "🖌", penStyleInk, "140px", function() {
         if (penStyleInk) {
-            penStyle.textContent = "🖌";
-
+            pressureBtn.textContent = "🖌";
             penStyleInk = false;
         } else {
             penStyleInk = true;
-            penStyle.textContent = "🖍";
-
+            pressureBtn.textContent = "🖍";
         }
     });
-
     var palmRejection = true;
-    var palmStyle = document.createElement("button");
-    palmStyle.textContent = "use hands";
-    palmStyle.style.position = "fixed";
-    palmStyle.style.top = "140px";
-    palmStyle.style.right = "20px";
-    palmStyle.style.zIndex = "9999";
-    controlsdiv.appendChild(palmStyle);
-    palmStyle.addEventListener("click", function() {
+    var palmBtn = createButton("use hands", "reject palm", palmRejection, "170px", function() {
         if (palmRejection) {
-            palmStyle.textContent = "reject palm";
-
+            palmBtn.textContent = "reject palm";
             palmRejection = false;
         } else {
             palmRejection = true;
-            palmStyle.textContent = "use hands";
-
+            palmBtn.textContent = "use hands";
         }
     });
+    var clearBtn = createButton("clear", "", true, "220px", function() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        points = [];
+        undoStack = [];
+    });
+
+    var disableActive = false;
+    var disableBtn = createButton("activate (disabled)", "disable", disableActive, "250px", function() {
+        if (disableActive) {
+            disableBtn.textContent = "disable";
+            canvas.style.pointerEvents = "auto";
+            disableActive = false;
+        } else {
+            disableActive = true;
+            disableBtn.textContent = "activate (disabled)";
+            canvas.style.pointerEvents = "none";
+        }
+    });
+
+
+
+
     var colors = ["black", "#02498c", "#FFAB01", "#5bc936", "#ef3228", "white"];
     colors.forEach(function(color, index) {
         var colorBtn = document.createElement("button");
@@ -364,38 +374,7 @@ javascript: (function() {
     });
 
 
-    var disableActive = false;
-    var disableBtn = document.createElement("button");
-    disableBtn.textContent = "disable";
-    disableBtn.style.position = "fixed";
-    disableBtn.style.top = "250px";
-    disableBtn.style.right = "20px";
-    disableBtn.style.zIndex = "9999";
-    controlsdiv.appendChild(disableBtn);
-    disableBtn.addEventListener("click", function() {
-        if (disableActive) {
-            disableBtn.textContent = "disable";
-            canvas.style.pointerEvents = "auto";
-            disableActive = false;
-        } else {
-            disableActive = true;
-            disableBtn.textContent = "activate (disabled)";
-            canvas.style.pointerEvents = "none";
-        }
-    });
 
-    var clearBtn = document.createElement("button");
-    clearBtn.textContent = "clear";
-    clearBtn.style.position = "fixed";
-    clearBtn.style.top = "220px";
-    clearBtn.style.right = "20px";
-    clearBtn.style.zIndex = "9999";
-    controlsdiv.appendChild(clearBtn);
-    clearBtn.addEventListener("click", function() {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        points = [];
-        undoStack = [];
-    });
 
 
     var slider = document.createElement("input");
@@ -412,7 +391,7 @@ javascript: (function() {
     slider.addEventListener("input", function() {
         baseStroke = slider.value;
         context.lineWidth = baseStroke;
-        console.log(context.lineWidth);
+        console.info(context.lineWidth);
     });
 
 
