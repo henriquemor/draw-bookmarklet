@@ -1,7 +1,7 @@
 javascript: (function() {
     var repo = "https://github.com/henriquemor/draw-bookmarklet";
     var author = "Henrique Moraes";
-    var version = "8.5";
+    var version = "8.6";
     var license = "MIT - 2023";
 
     var canvas = document.getElementById("draw-on-page-canvas");
@@ -217,12 +217,13 @@ javascript: (function() {
         localStorage.setItem("canvasDrawing", dataURL);
 
 
-        setTimeout(() => {
-            canvas.style.pointerEvents = "auto";
-        }, "1000");
-        setTimeout(() => {
-            canvas.style.pointerEvents = "auto";
-        }, "4000");
+        (function loop() {
+          if (canvas.style.pointerEvents == "auto") {
+                return;
+              }
+          canvas.style.pointerEvents = "auto";
+          setTimeout(loop, 500);
+       })();
 
     });
 
