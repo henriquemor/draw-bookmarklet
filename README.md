@@ -1,14 +1,17 @@
 # Draw bookmarklet :crayon:
-This bookmarklet supports both touch and pen pressure, allowing you to draw over webpages.
+This bookmarklet supports both touch and pen pressure, allowing you to annotate or draw over webpages.
  
  
  ![GitHub](https://img.shields.io/github/license/henriquemor/draw-bookmarklet?color=lightgray&style=flat-square)
+ 
+ Free. No extensions. No sign-up. 100% private.
  
  ⭐ consider starring if you find this useful!
  
 ## Features
 - line path smoothing
 - toggle between "pen" and "brush" with variable pressure
+- pen and finger touch pressure sensitivity (I was surprised)
 - color picker
 - highlighter _prototype_ with transparency
 - stroke size slider control
@@ -18,17 +21,18 @@ This bookmarklet supports both touch and pen pressure, allowing you to draw over
 - palm rejection
 
 **Tested on**
-- iOs Ipad Safari with Apple pen.
+- iOs Ipad Safari + Apple pen
+- Android Chrome and Firefox
 
 ## Installation
 Copy the draw.js or draw.min.js content to your bookmark url and execute at the desired page.
 
 ## Screenshot
-![01367ECE-559E-45FB-B63D-10EC259AB57B](https://user-images.githubusercontent.com/8562380/232560389-82a96448-ae75-4a8e-8798-0ae63c9f3e42.jpeg)
+![04DF03E9-CC33-4DBE-A6A7-22F3F457C5D2](https://user-images.githubusercontent.com/8562380/232943428-6c27d199-3f1c-4a6e-9a87-f57c971df7db.jpeg)
 
 
 ## Known issues
-Working on safari, but chrome is not executing.
+Not working on Chrome iOs.
 
 ## To-do
 - [ ] improve the tool layout
@@ -36,7 +40,7 @@ Working on safari, but chrome is not executing.
 - [ ] preferences saving
 - [ ] repository
   - [ ] actions (issue with .load file creation)
-- [ ] improve highlighter
-- [ ]  make the code more concise
+- [ ] improve highlighter (fix the dots between line segments)
+- [ ] make the code more concise
 
 `contributions are welcome`
