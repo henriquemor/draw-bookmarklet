@@ -25,7 +25,7 @@ javascript: (function() {
     canvas.style.zIndex = "9998";
     var context = canvas.getContext("2d");
     context.scale(dpr, dpr);
-    context.strokeStyle = "#02498c";
+    context.strokeStyle = "#FFAB01";
     var baseStroke = 1.5;
     context.lineWidth = baseStroke;
     context.lineCap = "round";
@@ -221,8 +221,14 @@ javascript: (function() {
                 console.log("Loop stopped");
                 return;
             }
+            canvas.style.pointerEvents = "none";
+          setTimeout(() => {
             canvas.style.pointerEvents = "auto";
-            setTimeout(enableLoop, 1000);
+            enableLoop();
+        }, 110);
+            canvas.style.pointerEvents = "auto";
+            setTimeout(enableLoop, 103);
+            
         };
         setTimeout(() => {
             canvas.style.pointerEvents = "auto";
