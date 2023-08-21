@@ -1,8 +1,9 @@
 javascript: (function() {
     var repo = "https://github.com/henriquemor/draw-bookmarklet";
     var author = "Henrique Moraes";
-    var version = "8.7";
+    var version = "8.8";
     var license = "MIT - 2023";
+    var cw = author + version + license + repo;
 
     var canvas = document.getElementById("draw-on-page-canvas");
     if (canvas) {
@@ -296,7 +297,7 @@ javascript: (function() {
             pressureBtn.textContent = "🖍";
         }
     });
-    var palmRejection = true;
+    var palmRejection = false;
     var palmBtn = createButton("use hands", "reject palm", palmRejection, "170px", function() {
         if (palmRejection) {
             palmBtn.textContent = "reject palm";
